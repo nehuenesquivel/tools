@@ -1,35 +1,31 @@
-basic_salary_in_usd = float(input("basic salary in usd: "))
+from datetime import datetime
 
-usd_value_in_ars = float(input("usd value in ars: "))
 
-basic_salary_in_ars = basic_salary_in_usd * usd_value_in_ars
+def print_screen(dict):
+    for key, value in dict.items():
+        print(key + ": " + str(value))
 
-sijp = basic_salary_in_ars * 0.11
 
-inssjp = basic_salary_in_ars * 0.03
+def write_file(dict):
+    file = open(
+        datetime.today().strftime("%m-%Y") + "_salary-receipt-reference.txt",
+        "w",
+    )
+    for key, value in dict.items():
+        file.write(key + ": " + str(value) + "\n")
+    file.close()
 
-osoc = basic_salary_in_ars * 0.03
 
-deductions = sijp + inssjp + osoc
+dict = dict()
+dict["Salary in USD"] = float(input("Salary in USD: "))
+dict["USD value in ARS"] = float(input("USD value in ARS: "))
+dict["Salary in ARS"] = dict["Salary in USD"] * dict["USD value in ARS"]
+dict["SIJP"] = dict["Salary in ARS"] * 0.11
+dict["INSSJP"] = dict["Salary in ARS"] * 0.03
+dict["OSOC"] = dict["Salary in ARS"] * 0.03
+dict["Deductions"] = dict["SIJP"] + dict["INSSJP"] + dict["OSOC"]
+dict["Net"] = dict["Salary in ARS"] - dict["Deductions"]
+dict["Net in ARS"] = dict["Net"] * 0.3
+dict["Net in USD"] = dict["Net"] * 0.7 / dict["USD value in ARS"]
 
-net_received = basic_salary_in_ars - deductions
-
-net_received_in_ars = net_received * 0.3
-
-net_received_in_usd = net_received * 0.7 / usd_value_in_ars
-
-print("basic salary in ars: " + str(basic_salary_in_ars) + "\n")
-
-print("sijp: " + str(sijp))
-
-print("inssjp: " + str(inssjp))
-
-print("osoc: " + str(osoc))
-
-print("deductions: " + str(deductions) + "\n")
-
-print("net received: " + str(net_received))
-
-print("net received in ars: " + str(net_received_in_ars))
-
-print("net received in usd: " + str(net_received_in_usd))
+print_screen(dict)
