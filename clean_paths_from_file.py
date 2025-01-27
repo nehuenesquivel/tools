@@ -1,7 +1,6 @@
-import os, shutil
+import os, shutil, sys
 
-
-with open("D:/github/tools/cache_paths.txt") as file:
+with open(sys.argv[1]) as file:
     for line in file:
         path = line.rstrip()
         for element in os.listdir(path):
