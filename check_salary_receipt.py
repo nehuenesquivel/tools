@@ -17,16 +17,26 @@ def write_file(dict):
 
 
 salary_in_usd = float(input("Salary in USD: "))
-usd_value_in_ars = float(input("USD value in ARS: "))
+official_usd_value_in_ars = float(input("Official USD value in ARS: "))
+unofficial_usd_value_in_ars = float(input("Unofficial USD value in ARS: "))
 
 dict = dict()
-dict["Salary in ARS"] = salary_in_usd * usd_value_in_ars
+dict["Salary in ARS"] = salary_in_usd * official_usd_value_in_ars
 dict["SIJP"] = dict["Salary in ARS"] * 0.11
 dict["INSSJP"] = dict["Salary in ARS"] * 0.03
 dict["OSOC"] = dict["Salary in ARS"] * 0.03
 dict["Deductions"] = dict["SIJP"] + dict["INSSJP"] + dict["OSOC"]
-dict["Net"] = dict["Salary in ARS"] - dict["Deductions"]
-dict["Net in ARS"] = dict["Net"] * 0.3
-dict["Net in USD"] = dict["Net"] * 0.7 / usd_value_in_ars
+dict["Official Net"] = dict["Salary in ARS"] - dict["Deductions"]
+dict["Net in ARS"] = dict["Official Net"] * 0.3
+dict["Net in USD"] = dict["Official Net"] * 0.7 / official_usd_value_in_ars
+dict["Unofficial Net"] = dict["Net in ARS"] + dict["Net in USD"] * unofficial_usd_value_in_ars
 
 print_screen(dict)
+
+with open("official_and_unofficial_USD_value_in_ARS_per_month.txt", "a") as file:
+    file.write(
+        str(datetime.now().year) + "{:02d}".format(datetime.now().month)
+        + ": official " + str(official_usd_value_in_ars)
+        + ", unofficial " + str(unofficial_usd_value_in_ars)
+        + "\n"
+    )
