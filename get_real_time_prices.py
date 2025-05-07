@@ -13,7 +13,7 @@ def read(x0, y0, x1, y1, before_split_char):
     #print(string)
 
     if string == "":
-        value = ""
+        value = "-1"
         #print("empty")
     else:        
         if string[-1] == ",":
